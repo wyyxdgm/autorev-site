@@ -1,0 +1,150 @@
+/* Cozy coloring pages — static site skeleton (internal draft, not live)
+   Zero dependencies: system fonts only, no external requests. */
+
+:root {
+  --bg: #faf6f0;
+  --card: #ffffff;
+  --ink: #3d3630;
+  --muted: #7a7066;
+  --accent: #b0713e;
+  --accent-dark: #8a5427;
+  --line: #e8dfd3;
+  --draft: #a33;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+}
+
+/* Draft banner — remove at launch (after W1–W6 cleared) */
+.draft-banner {
+  background: var(--draft);
+  color: #fff;
+  text-align: center;
+  font-size: 0.85rem;
+  padding: 0.4rem 1rem;
+}
+
+header.site {
+  padding: 1rem;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  align-items: baseline;
+}
+
+header.site .brand {
+  font-weight: 700;
+  font-size: 1.15rem;
+  text-decoration: none;
+  color: var(--ink);
+}
+
+nav a { color: var(--accent-dark); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+
+main { max-width: 960px; margin: 0 auto; padding: 1rem; }
+
+h1 { font-size: 1.6rem; line-height: 1.25; margin: 0.5rem 0; }
+h2 { font-size: 1.2rem; margin-top: 2rem; }
+
+.hero p.lede { font-size: 1.05rem; color: var(--muted); max-width: 34em; }
+
+.grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  margin: 1rem 0;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.card img { width: 100%; display: block; aspect-ratio: 1 / 1; object-fit: cover; }
+
+.card .body { padding: 0.8rem 1rem 1rem; }
+.card h3 { margin: 0 0 0.3rem; font-size: 1.05rem; }
+.card p { margin: 0.2rem 0; font-size: 0.92rem; color: var(--muted); }
+.card .price { font-weight: 700; color: var(--ink); font-size: 1rem; }
+
+.card a.cover { display: block; }
+
+.btn {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  padding: 0.65rem 1.4rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+}
+.btn:hover { background: var(--accent-dark); }
+
+.btn.disabled {
+  background: #c9bfb2;
+  cursor: not-allowed;
+}
+
+.btn.secondary {
+  background: transparent;
+  color: var(--accent-dark);
+  border: 1.5px solid var(--accent);
+}
+.btn.secondary:hover { background: #f4e9dd; }
+
+.note {
+  background: #fdf3e4;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.7rem 1rem;
+  font-size: 0.9rem;
+}
+
+.page-status {
+  font-size: 0.85rem;
+  color: var(--muted);
+  border-left: 3px solid var(--line);
+  padding-left: 0.7rem;
+  margin: 1rem 0;
+}
+
+/* Product page thumbnails */
+.thumbs {
+  display: grid;
+  gap: 0.6rem;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+}
+.thumbs figure { margin: 0; background: var(--card); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.thumbs img { width: 100%; aspect-ratio: 1/1; object-fit: cover; display: block; }
+.thumbs figcaption { font-size: 0.78rem; color: var(--muted); padding: 0.35rem 0.5rem; }
+
+.spec-table { border-collapse: collapse; width: 100%; max-width: 560px; font-size: 0.95rem; }
+.spec-table td { padding: 0.45rem 0.8rem 0.45rem 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+.spec-table td:first-child { color: var(--muted); white-space: nowrap; padding-right: 1.5rem; }
+
+footer.site {
+  border-top: 1px solid var(--line);
+  margin-top: 3rem;
+  padding: 1.2rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+footer.site nav a { margin-right: 1.2rem; }
+
+@media (min-width: 700px) {
+  h1 { font-size: 2rem; }
+  main { padding: 1.5rem 1rem 2rem; }
+}

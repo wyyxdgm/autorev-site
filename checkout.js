@@ -1,0 +1,45 @@
+// checkout.js — wires [data-checkout-product] buttons to Waffo Pancake hosted checkout.
+// Store Slug auth (public, client-safe): price/tax come from the product record server-side,
+// so nothing here can tamper with pricing.
+// NOTE: X-Environment is 'test' until Pancake KYC passes (store prodEnabled=false).
+//       After approval, switch ENV to 'prod' (single line, see STATE.md).
+(function () {
+  var STORE_SLUG = 'cozy-line-studio-fgd6wnqm';
+  var ENV = 'test'; // switch to 'prod' after KYC approval
+  var API = 'https://api.waffo.ai/v1/actions/checkout/create-session';
+
+  document.querySelectorAll('[data-checkout-product]').forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (btn.dataset.busy) return;
+      btn.dataset.busy = '1';
+      var original = btn.textContent;
+      btn.textContent = 'Opening secure checkout…';
+      fetch(API, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Store-Slug': STORE_SLUG,
+          'X-Environment': ENV
+        },
+        body: JSON.stringify({
+          productId: btn.getAttribute('data-checkout-product'),
+          currency: 'USD',
+          language: 'en'
+        })
+      })
+        .then(function (r) { return r.json(); })
+        .then(function (j) {
+          var url = j && j.data && j.data.checkoutUrl;
+          if (!url) throw new Error(JSON.stringify(j));
+          window.location.href = url;
+        })
+        .catch(function (err) {
+          delete btn.dataset.busy;
+          btn.textContent = original;
+          console.error('checkout error', err);
+          window.alert("Couldn't open checkout — please try again, or email wyyxdgm@163.com.");
+        });
+    });
+  });
+})();
