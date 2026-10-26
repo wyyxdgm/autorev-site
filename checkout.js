@@ -5,7 +5,7 @@
 //       After approval, switch ENV to 'prod' (single line, see STATE.md).
 (function () {
   var STORE_SLUG = 'cozy-line-studio-fgd6wnqm';
-  var ENV = 'test'; // switch to 'prod' after KYC approval
+  var ENV = 'prod'; // KYC 已过(2026-10-26), 生产模式
   var API = 'https://api.waffo.ai/v1/actions/checkout/create-session';
 
   document.querySelectorAll('[data-checkout-product]').forEach(function (btn) {
