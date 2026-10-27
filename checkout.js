@@ -1,12 +1,14 @@
 // checkout.js — wires [data-checkout-product] buttons to Waffo Pancake hosted checkout.
 // Store Slug auth (public, client-safe): price/tax come from the product record server-side,
 // so nothing here can tamper with pricing.
-// NOTE: X-Environment is 'test' until Pancake KYC passes (store prodEnabled=false).
-//       After approval, switch ENV to 'prod' (single line, see STATE.md).
+// NOTE: session create goes through our own origin (/api/checkout-session, nginx proxy to
+//       api.waffo.ai). Direct browser->api.waffo.ai fetch failed for mainland-CN visitors
+//       (Vercel edge unstable from CN, 2026-10-27) — same-origin also drops the CORS preflight.
+//       The checkout PAGE itself (pancake.waffo.ai) is still a top-level redirect.
 (function () {
   var STORE_SLUG = 'cozy-line-studio-fgd6wnqm';
   var ENV = 'prod'; // KYC 已过(2026-10-26), 生产模式
-  var API = 'https://api.waffo.ai/v1/actions/checkout/create-session';
+  var API = '/api/checkout-session';
 
   document.querySelectorAll('[data-checkout-product]').forEach(function (btn) {
     btn.addEventListener('click', function (e) {
